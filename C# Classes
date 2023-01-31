@@ -1,0 +1,123 @@
+using System;
+
+
+public class Program
+{
+    // valid method
+    public static void Main(string[] args)
+    { // invalid method- wont work
+        while (true)
+        {
+            Console.WriteLine("Do you want to \"Add\", \"Sub\", \"Divide\", \"Multiply\", or if you are done, please enter \"Done\""); //telling user to input what they want to do (operation).
+
+            string operation = Console.ReadLine(); //takes users input and stores it in a variable.
+
+            if (operation.ToLower() == "done")// operation for the user, if they are done, program will break.
+            {
+                return;
+            }
+            else
+            {
+                //...
+            }
+            Console.Write("Input a number:");// asks user to input a number.
+
+            string num01 = Console.ReadLine();//stores the first number as a variable
+
+            Console.Write("Input a second number:");//asks user to input a second number.
+
+            string num02 = Console.ReadLine();//stores the second number as a variable.
+
+            InputConverter converter = new InputConverter(num01, num02);
+            converter.convertToInt();
+            Calculations calculator = new Calculations(converter.numberOneConvert, converter.numberTwoConvert);
+
+            double result = calculator.PerformCalculation(operation);
+
+            Console.WriteLine("Your result is..." + (result));
+            Console.ReadLine();
+        }
+
+    }
+
+}
+public class InputConverter
+{
+    string partOne;
+    string partTwo;
+    public int numberOneConvert { get; private set; }
+    public int numberTwoConvert { get; private set; }
+    public InputConverter(string numberOne, string numberTwo)
+    {
+        partOne = numberOne;
+        partTwo = numberTwo;
+    }
+
+    public void convertToInt()
+    {
+        numberOneConvert = Convert.ToInt32(partOne);
+        numberTwoConvert = Convert.ToInt32(partTwo);
+    }
+}
+
+public class Calculations : InputConverter
+{
+    int n1;
+    int n2;
+    double result;
+    public Calculations(int numberOneConvert, int numberTwoConvert) : base(numberOneConvert.ToString(), numberTwoConvert.ToString())
+    {
+        n1 = numberOneConvert;
+        n2 = numberTwoConvert;
+    }
+    public double PerformCalculation(string operation)
+    {
+        if (operation.ToLower() == "add") //calling the add method.
+
+        {
+            result = add(n1, n2);
+        }
+
+        else if (operation.ToLower() == "sub")//calling the sub method
+
+        {
+            result = sub(n1, n2);
+        }
+
+        else if (operation.ToLower() == "divide")//calling the divide method
+
+        {
+            result = divide(n1, n2);
+
+        }
+
+        else if (operation.ToLower() == "multiply")//calling the multiply method
+
+        {
+            result = multiply(n1, n2);
+        }
+        else
+
+        {
+            Console.WriteLine("Start over and put correct inputs.");//if user puts in wrong information, programme will ask user to put in correct inputs.=
+        }
+
+        return result;
+    }
+    private static double add(double n1, double n2) //start of methods (add).
+    {
+        return n1 + n2;//is the adding of the 2 users inputs.
+    }
+    private static double sub(double n1, double n2)//method (sub).
+    {
+        return n1 - n2;//is the subbing of the 2 users inputs.
+    }
+    private static double divide(double n1, double n2)//method (divide)
+    {
+        return n1 / n2;//is the dividing of the 2 users inputs.
+    }
+    private static double multiply(double n1, double n2)//method (multiply)
+    {
+        return n1 * n2;//is the multiplying of the 2 users inputs.
+    }
+}
